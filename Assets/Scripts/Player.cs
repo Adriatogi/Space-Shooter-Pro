@@ -44,6 +44,8 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     [SerializeField]
     private AudioClip _laserAudio;
+    [SerializeField]
+    private AudioClip _damageSound;
 
     
 
@@ -73,10 +75,6 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("AudioSource is null");
         }
-        else
-        {
-            _audioSource.clip = _laserAudio;
-        }
     }
 
     // Update is called once per frame
@@ -105,7 +103,7 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
 
-        _audioSource.Play();
+        _audioSource.PlayOneShot(_laserAudio, 0.5f);
 
     }
 
@@ -145,6 +143,7 @@ public class Player : MonoBehaviour
         }
 
         //Subtract and update lives
+        AudioSource.PlayClipAtPoint(_damageSound, transform.position);
         _lives--;
         _UIManager.updateLives(_lives);
 

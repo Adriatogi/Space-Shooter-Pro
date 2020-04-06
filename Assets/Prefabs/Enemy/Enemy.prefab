@@ -49,6 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 4
+  _doubleShotPrefab: {fileID: 305423426597234680, guid: 9a8349581f5ce0947b7eadc2d41e259d,
+    type: 3}
 --- !u!212 &8859305253440025117
 SpriteRenderer:
   m_ObjectHideFlags: 0

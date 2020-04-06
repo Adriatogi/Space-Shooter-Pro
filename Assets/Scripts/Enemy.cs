@@ -7,6 +7,10 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     private float _speed = 4;
+    [SerializeField]
+    private GameObject _doubleShotPrefab;
+    private float _fireRate = 5.0f;
+    private float _canFire = -1.0f;
 
     private Player _player;
     private Animator _animator;
@@ -32,6 +36,23 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        calculateMovement();
+
+        if(Time.time > _canFire)
+        {
+            _fireRate = Random.Range(3.0f, 7.0f);
+            _canFire = Time.time + _fireRate;
+            GameObject enemyLaser = Instantiate(_doubleShotPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+            for(int i=0; i < lasers.Length; i++)
+            {
+                lasers[i].assignEnemyLaser();
+            }
+        }
+    }
+
+    void calculateMovement()
+    {
         //Move enemy down
         transform.Translate(Vector3.down * Time.deltaTime * _speed);
 
@@ -42,7 +63,6 @@ public class Enemy : MonoBehaviour
             transform.position = new Vector3(randomX, 7.0f, 0);
         }
     }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         
