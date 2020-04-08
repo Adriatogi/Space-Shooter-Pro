@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     private GameObject _doubleShotPrefab;
     private float _fireRate = 5.0f;
     private float _canFire = -1.0f;
+    private bool _destroyed = false;
 
     private Player _player;
     private Animator _animator;
@@ -38,9 +39,9 @@ public class Enemy : MonoBehaviour
     {
         calculateMovement();
 
-        if(Time.time > _canFire)
+        if((Time.time > _canFire) && (_destroyed == false))
         {
-            _fireRate = Random.Range(3.0f, 7.0f);
+            _fireRate = Random.Range(5.0f, 10.0f);
             _canFire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_doubleShotPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
@@ -78,6 +79,7 @@ public class Enemy : MonoBehaviour
 
             _animator.SetTrigger("onEnemyDeath");
             _speed = 0.3f;
+            _destroyed = true;
             _audioSource.Play();
             Destroy(GetComponent<Collider2D>());
 
@@ -94,6 +96,7 @@ public class Enemy : MonoBehaviour
 
             _animator.SetTrigger("onEnemyDeath");
             _speed = 0.3f;
+            _destroyed = true;
             _audioSource.Play();
 
             Destroy(GetComponent<Collider2D>());
