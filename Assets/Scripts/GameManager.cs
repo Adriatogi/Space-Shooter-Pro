@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(1); //Current game scene
         }
+
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
     public void GameOver()
     {
