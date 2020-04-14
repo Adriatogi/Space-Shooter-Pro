@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     private GameObject[] _engineFailures;
 
     private UIManager _UIManager;
+    private Animator _animator;
 
     private AudioSource _audioSource;
     [SerializeField]
@@ -59,8 +60,13 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _UIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
+        _animator = GetComponent<Animator>();
 
         //Null checking
+        if(_animator == null)
+        {
+            Debug.LogError("Animator is null");
+        }
         if (_spawnManager == null)
         {
             Debug.LogError("Spawn Manager is null");
@@ -112,6 +118,7 @@ public class Player : MonoBehaviour
         //control input for movement
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
+        Vector3 direction = new Vector3(horizontalInput, 0);
 
         //movement of player
         transform.Translate(new Vector3(horizontalInput, verticalInput, 0) * _speed * Time.deltaTime);
@@ -126,6 +133,8 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(-10.263f, transform.position.y, 0);
         }
 
+        _animator.SetFloat("Horizontal", horizontalInput);
+        _animator.SetFloat("Speed", direction.sqrMagnitude);
         //Y-axis movement restrain
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.838f, 5.95f), 0);
         
