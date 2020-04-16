@@ -73,4 +73,14 @@ public class UIManager : MonoBehaviour
         StartCoroutine(gameOverFlickerRoutine());
         _gameManager.GameOver();
     }
+
+    public void resumePlay()
+    {
+        _gameManager.resumeGame();
+    }
+
+    public void backToMainMenu()
+    {
+        SceneManager.LoadScene("Main_Menu");
+    }
 }
