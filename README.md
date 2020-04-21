@@ -1,3 +1,3 @@
-# Spoace-Shooter-Pro
+# Space-Shooter-Pro
 
 Can be found at https://adriatogi.itch.io/space-shooter-pro
