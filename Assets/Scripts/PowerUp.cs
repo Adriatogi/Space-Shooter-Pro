@@ -6,8 +6,8 @@ public class PowerUp : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3.0f;
-    [SerializeField] // 0 = tripleShot, 1 = Speed, 2 = Shield
-    private int powerUpIdD;
+    [SerializeField]
+    private PowerUps powerUpIdD;
     [SerializeField]
     private AudioClip _audioClip;
 
@@ -23,7 +23,7 @@ public class PowerUp : MonoBehaviour
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         // Destroy once off-screen
-        if(transform.position.y < -5.76f)
+        if (transform.position.y < -5.76f)
         {
             Destroy(this.gameObject);
         }
@@ -31,24 +31,24 @@ public class PowerUp : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             //Handle for player
             Player player = other.transform.GetComponent<Player>();
-            if(player != null)
+            if (player != null)
             {
                 //PowerUp Handler
                 switch (powerUpIdD)
                 {
-                    case 0:
+                    case PowerUps.tripleShot:
                         //Activate triple shot
                         player.tripleShotActive();
                         break;
-                    case 1:
+                    case PowerUps.speedBoost:
                         //Activate speed boost
                         player.speedBoostActive();
                         break;
-                    case 2:
+                    case PowerUps.shield:
                         //Activate shield
                         player.ShieldActive();
                         break;
@@ -63,4 +63,10 @@ public class PowerUp : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    private enum PowerUps{
+        tripleShot,
+        speedBoost,
+        shield
+}
 }
